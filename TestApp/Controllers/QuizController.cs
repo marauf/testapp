@@ -16,7 +16,52 @@ namespace TestApp.Controllers
     public class QuizController : Controller
     {
 
-        //GET api/quiz/latest
+        #region Restful Convention method public API method
+        ///<summary>
+        ///GET:api/quiz/{}id
+        ///Retrieves quiz w/id
+        /// </summary>
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var v = new QuizViewModel()
+            {
+                Id = id,
+                Title = String.Format("Sample quiz with id {0}", id),
+                Description = "no real number",
+                CreatedDate = DateTime.Now,
+                LastModifiedDate = DateTime.Now
+            };
+
+            return new JsonResult(
+                v, new JsonSerializerSettings()
+                {
+                    Formatting = Formatting.Indented
+                });
+        }
+   
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #region attribute-based routing method
+        /// <summary>
+        /// Get: api/quiz/latest
+        /// Retrieves the {num} latest quizes
+        /// </summary>
+        /// <param name="num">quizzes .. </param>
+        /// <returns></returns>
         // Attribute routing
         [HttpGet("Latest/{num}")]
         public IActionResult Latest(int num = 10)
@@ -55,11 +100,11 @@ namespace TestApp.Controllers
                 new JsonSerializerSettings()
                 { Formatting = Formatting.Indented });
         }
-
+        #endregion
 
         /*
          * GET: api/quiz/ByTitle
-         */ 
+         */
         [HttpGet("ByTitle/{num:int?}")]
         public IActionResult ByTitle(int num = 10) {
             var sampleQuizzes = ((JsonResult)Latest(num)).Value as List<QuizViewModel>;

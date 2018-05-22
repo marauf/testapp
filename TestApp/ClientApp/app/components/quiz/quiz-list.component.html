@@ -1,0 +1,13 @@
+﻿<h2>{{title}}</h2>
+
+<!--- go through quizzes array as filled by subscribe method
+- call onSelect method w/current quiz-->
+
+
+<ul class="quizzes">
+    <li *ngFor="let quiz of quizzes"
+        [class.selected]="quiz === selectedQuiz"
+        (click)="onSelect(quiz)">
+        <span>{{quiz.Title}}</span>
+    </li>
+</ul>
